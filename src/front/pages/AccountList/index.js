@@ -20,6 +20,13 @@ class Index extends Component {
   }
 
   componentDidMount () {
+    axios.get('/checkLogin').then(({ data }) => {
+      if (data.success) {
+        this.setState({
+          loggined: true
+        })
+      }
+    })
     this.loadAccounts()
   }
 

@@ -4,7 +4,17 @@ const keygen = require('keygenerator')
 
 const Account = require('../db/models/Account')
 
-router.get('/generateKey', (req, res) => {
+const authMiddleware = (req, res, next) => {
+  if (req.session.auth) {
+    next()
+  } else {
+    res.end({
+      success: false
+    })
+  }
+}
+
+router.get('/generateKey', authMiddleware, (req, res) => {
   res.json({
     key: keygen._({
       forceUppercase: true,
@@ -14,7 +24,7 @@ router.get('/generateKey', (req, res) => {
   })
 })
 
-router.post('/addAccount', async (req, res) => {
+router.post('/addAccount', authMiddleware, async (req, res) => {
   const { name, email, licenseKey } = req.body
   const acc = new Account({
     name,
@@ -68,12 +78,12 @@ router.post('/checkLicense', async (req, res) => {
   })
 })
 
-router.get('/accounts', async (req, res) => {
+router.get('/accounts', authMiddleware, async (req, res) => {
   const accounts = await Account.find()
   res.json(accounts)
 })
 
-router.patch('/update', async (req, res) => {
+router.patch('/update', authMiddleware, async (req, res) => {
   const { id, newData } = req.body
   const account = await Account.findById(id)
   account.set(newData)
@@ -83,7 +93,7 @@ router.patch('/update', async (req, res) => {
   })
 })
 
-router.delete('/delete', async (req, res) => {
+router.delete('/delete', authMiddleware, async (req, res) => {
   const { id } = req.body
   await Account.remove({
     _id: id
@@ -97,6 +107,19 @@ router.post('/login', async (req, res) => {
   const { login, password } = req.body
   const { ADMIN } = require('../../../config.json')
   if (login.toUpperCase() === ADMIN.USER.toUpperCase() && password === ADMIN.PASSWORD) {
+    req.session.auth = true
+    res.json({
+      success: true
+    })
+  } else {
+    res.json({
+      success: false
+    })
+  }
+})
+
+router.get('/checkLogin', async (req, res) => {
+  if (req.session.auth) {
     res.json({
       success: true
     })

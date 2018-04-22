@@ -17,15 +17,17 @@
     "antd": "^3.4.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
+    "connect-mongo": "^2.0.1",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "getmac": "^1.4.1",
     "keygenerator": "^1.0.4",
     "licensekey": "^2.0.11",
-    "mongoose": "^5.0.15",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
     "moment": "latest",
-    "prop-types": "latest"
+    "mongoose": "^5.0.15",
+    "prop-types": "latest",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
