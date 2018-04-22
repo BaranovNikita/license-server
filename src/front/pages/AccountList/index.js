@@ -23,7 +23,9 @@ class Index extends Component {
       loading: true
     })
     try {
-      const { data } = await axios.get(`${HOST}/accounts`)
+      const { data } = await axios.get(`${HOST}/accounts`, {
+        withCredentials: true
+      })
       this.setState({
         loading: false,
         accounts: data
@@ -64,7 +66,8 @@ class Index extends Component {
     await axios.delete(`${HOST}/delete`, {
       data: {
         id
-      }
+      },
+      withCredentials: true
     })
     this.setState({
       loading: false
@@ -79,11 +82,15 @@ class Index extends Component {
     })
     const isNew = this.state.selectedItem === null
     if (isNew) {
-      await axios.post(`${HOST}/addAccount`, data)
+      await axios.post(`${HOST}/addAccount`, data, {
+        withCredentials: true
+      })
     } else {
       await axios.patch(`${HOST}/update`, {
         newData: data,
         id: this.state.selectedItem._id
+      }, {
+        withCredentials: true
       })
     }
     this.setState({

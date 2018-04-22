@@ -34,7 +34,9 @@ class AddOrEditModal extends PureComponent {
   }
 
   generateLicenseKey = async () => {
-    const { data } = await axios.get(`${HOST}/generateKey`)
+    const { data } = await axios.get(`${HOST}/generateKey`, {
+      withCredentials: true
+    })
     this.setState({
       licenseKey: data.key
     })
