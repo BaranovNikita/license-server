@@ -24,10 +24,11 @@ class Index extends Component {
       if (data.success) {
         this.setState({
           loggined: true
+        }, () => {
+          this.loadAccounts()
         })
       }
     })
-    this.loadAccounts()
   }
 
   loadAccounts = async () => {
@@ -56,6 +57,8 @@ class Index extends Component {
     if (data.success) {
       this.setState({
         loggined: true
+      }, () => {
+        this.loadAccounts()
       })
     }
   }
