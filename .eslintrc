@@ -1,0 +1,13 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["standard", "standard-react"],
+    "globals": {
+        "window": true,
+        "document": true
+    },
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ]
+}
