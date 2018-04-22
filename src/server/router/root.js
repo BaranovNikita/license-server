@@ -92,4 +92,18 @@ router.delete('/delete', async (req, res) => {
     success: true
   })
 })
+
+router.post('/login', async (req, res) => {
+  const { login, password } = req.body
+  const { ADMIN } = require('../../../config')
+  if (login.toUpperCase() === ADMIN.USER.toUpperCase() && password === ADMIN.PASSWORD) {
+    res.json({
+      success: true
+    })
+  } else {
+    res.json({
+      success: false
+    })
+  }
+})
 module.exports = router

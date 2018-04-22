@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Icon, Popconfirm, Table, Button } from 'antd'
+import { Icon, Popconfirm, Table, Button, Input } from 'antd'
 import moment from 'moment'
 import AddOrEditModal from './AddOrEditModal'
 
@@ -10,7 +10,13 @@ class Index extends Component {
     error: '',
     loading: false,
     visibleModal: false,
-    selectedItem: null
+    selectedItem: null,
+    loggined: false,
+    login: {
+      username: '',
+      password: ''
+
+    }
   }
 
   componentDidMount () {
@@ -31,6 +37,18 @@ class Index extends Component {
       this.setState({
         loading: false,
         error: e.message
+      })
+    }
+  }
+
+  login = async (login, password) => {
+    const { data } = await axios.post('/login', {
+      login,
+      password
+    })
+    if (data.success) {
+      this.setState({
+        loggined: true
       })
     }
   }
@@ -92,8 +110,42 @@ class Index extends Component {
     this.loadAccounts()
   }
 
+  onChange = (e) => {
+    this.setState({
+      login: {
+        ...this.state.login,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
+
   render () {
-    const { loading, error, accounts, visibleModal } = this.state
+    const { loading, error, accounts, visibleModal, loggined, login } = this.state
+
+    if (!loggined) {
+      return (
+        <form>
+          <Input
+            placeholder='Name'
+            name='username'
+            prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            value={login.username}
+            onChange={this.onChange}
+            style={{ marginBottom: 10 }}
+          />
+          <Input
+            placeholder='Password'
+            name='password'
+            type='password'
+            prefix={<Icon type='edit' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            value={login.password}
+            onChange={this.onChange}
+            style={{ marginBottom: 10 }}
+          />
+          <Button type='primary' size='large' onClick={() => this.login(this.state.login.username, this.state.login.password)}>Войти</Button>
+        </form>
+      )
+    }
 
     const columns = [{
       title: 'Name',
