@@ -1,18 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const keygen = require('keygenerator')
-const { getMac } = require('getmac')
 
 const Account = require('../db/models/Account')
-
-const getMacAddress = () => new Promise((resolve, reject) => {
-  getMac((err, macAddress) => {
-    if (err) {
-      return reject(err)
-    }
-    resolve(macAddress)
-  })
-})
 
 router.get('/generateKey', (req, res) => {
   res.json({
