@@ -95,7 +95,7 @@ router.delete('/delete', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { login, password } = req.body
-  const { ADMIN } = require('../../../config')
+  const { ADMIN } = require('../../../config.json')
   if (login.toUpperCase() === ADMIN.USER.toUpperCase() && password === ADMIN.PASSWORD) {
     res.json({
       success: true
