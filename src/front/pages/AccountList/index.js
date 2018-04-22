@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Icon, Popconfirm, Table, Button } from 'antd'
 import moment from 'moment'
-import { HOST } from '../../global'
 import AddOrEditModal from './AddOrEditModal'
 
 class Index extends Component {
@@ -23,9 +22,7 @@ class Index extends Component {
       loading: true
     })
     try {
-      const { data } = await axios.get(`${HOST}/accounts`, {
-        withCredentials: true
-      })
+      const { data } = await axios.get(`/accounts`)
       this.setState({
         loading: false,
         accounts: data
@@ -63,11 +60,10 @@ class Index extends Component {
       loading: true
     })
     console.log(id)
-    await axios.delete(`${HOST}/delete`, {
+    await axios.delete(`/delete`, {
       data: {
         id
-      },
-      withCredentials: true
+      }
     })
     this.setState({
       loading: false
@@ -82,15 +78,11 @@ class Index extends Component {
     })
     const isNew = this.state.selectedItem === null
     if (isNew) {
-      await axios.post(`${HOST}/addAccount`, data, {
-        withCredentials: true
-      })
+      await axios.post(`/addAccount`, data)
     } else {
-      await axios.patch(`${HOST}/update`, {
+      await axios.patch(`/update`, {
         newData: data,
         id: this.state.selectedItem._id
-      }, {
-        withCredentials: true
       })
     }
     this.setState({

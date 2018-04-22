@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import axios from 'axios'
 import { Icon, Input, Modal } from 'antd'
 import PropTypes from 'prop-types'
-import { HOST } from '../../global'
 
 class AddOrEditModal extends PureComponent {
   static propTypes = {
@@ -34,9 +33,7 @@ class AddOrEditModal extends PureComponent {
   }
 
   generateLicenseKey = async () => {
-    const { data } = await axios.get(`${HOST}/generateKey`, {
-      withCredentials: true
-    })
+    const { data } = await axios.get(`/generateKey`)
     this.setState({
       licenseKey: data.key
     })

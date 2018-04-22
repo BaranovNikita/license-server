@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-front": "webpack --config ./src/front/webpack.config.js --mode development",
     "prod-front": "webpack --config ./src/front/webpack.config.js  --mode production",
-    "watch-front": "webpack --config ./src/front/webpack.config.js --mode development --watch"
+    "watch-front": "webpack --config ./src/front/webpack.config.js --mode development --watch",
+    "json": "webpack --config ./src/front/webpack.config.js --profile --json > compilation-stats.json"
   },
   "keywords": [],
   "author": "",
