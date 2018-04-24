@@ -1,6 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const { join } = require('path')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+
 require('./db')
 
 const server = express()
@@ -11,6 +14,13 @@ server.use(bodyParser.urlencoded({
   extended: true
 }))
 server.use(bodyParser.json())
+
+server.use(session({
+  secret: 'SuperLicenseKey',
+  store: new MongoStore({ mongooseConnection: require('./db') }),
+  resave: false,
+  saveUninitialized: true
+}))
 
 server.use('/', require('./router/root'))
 
