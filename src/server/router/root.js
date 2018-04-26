@@ -66,7 +66,7 @@ router.post('/checkLicense', async (req, res) => {
       success: true
     })
   }
-  const index = pcKey.find(el => el.key === mac.toUpperCase())
+  const index = pcKey.findIndex(el => el.key === mac.toUpperCase())
   if (index < 0) {
     return res.json({
       success: false,
