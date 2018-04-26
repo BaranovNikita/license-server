@@ -33,7 +33,7 @@ class AddOrEditModal extends PureComponent {
   }
 
   generateLicenseKey = async () => {
-    const { data } = await axios.get(`/generateKey`)
+    const { data } = await axios.get(`http://localhost:1080/generateKey`)
     this.setState({
       licenseKey: data.key
     })
@@ -46,7 +46,11 @@ class AddOrEditModal extends PureComponent {
   }
 
   handleOk = () => {
-    this.props.handleSave(this.state)
+    this.props.handleSave({
+      name: this.state.name.trim(),
+      email: this.state.email.trim(),
+      licenseKey: this.state.licenseKey.trim()
+    })
     this.setState({
       name: '',
       email: '',
